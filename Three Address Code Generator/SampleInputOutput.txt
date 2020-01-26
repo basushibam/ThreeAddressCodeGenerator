@@ -1,0 +1,88 @@
+Input 1:
+
+int e=5;
+int low=0;
+int high=n-1;
+while(low<=high)
+{
+	int mid=(low+high)/2;
+	if(a_mid==e){p=q+r;}
+	else
+	{
+		if(a_mid>e)
+		{
+			low = mid+1;
+		}
+		else
+		{
+			high=mid-1;
+		}
+	}
+}
+
+Output 1:
+
+----------  FINAL THREE ADDRESS CODE ----------
+e=5
+low=0
+t3=n-1
+high=t3
+L8 : L7 : if(low<=high) jump L6   
+ jump L9  
+L6 : t5=low+high
+t6=t5/2
+mid=t6
+L5 : if(a_mid==e) jump L3   
+jump L4  
+L3 : t8=q+r
+p=t8
+jump L7  
+L4 : if(a_mid>e) jump L1   
+jump L2  
+L1 : t10=mid+1
+low=t10
+jump L7  
+L2 : t12=mid-1
+high=t12
+jump L7
+L9 : END OF THREE ADDRESS CODE !!!!!
+
+##########################################################################################
+Input 2:
+
+switch(a)
+{
+	case 0: {a=b+c;}
+	case 1: {p=q+r;}
+	default:
+	{
+		i=0;
+		while(i<10){b=c+d*ul;}
+	}
+}
+
+Output 2:
+
+----------  FINAL THREE ADDRESS CODE ----------
+
+if(a   =0) jump L6
+jump L7
+L6 : t1=b+c
+a=t1
+jump L8  
+L7 : 
+if(a   =1) jump L4
+jump L5
+L4 : t3=q+r
+p=t3
+jump L8  
+L5 : i=0
+L3 : L2 : if(i<10) jump L1   
+jump L8  
+L1 : t6=d*ul
+t7=c+t6
+b=t7
+jump L2
+L8 : END OF THREE ADDRESS CODE !!!!!
+
+##########################################################################################

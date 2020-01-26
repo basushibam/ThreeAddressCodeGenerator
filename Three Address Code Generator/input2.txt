@@ -1,0 +1,13 @@
+while(a<b)
+{
+	a=b+c;
+	while(c<6)
+	{
+		if(a<b+c){x=y;}
+		else
+		{
+
+			if(a<b) {p=q+r;}
+		}
+	}
+}

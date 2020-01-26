@@ -1,0 +1,18 @@
+switch(a)
+{
+	case 0: {a=b+c;}
+	case 1: {p=q+r;}
+	default:
+	{
+		i=0;
+		while(i<10){b=c+d*ul;}
+	}
+}
+while(i<10)
+{
+	i++;
+	if(a>=b)
+	{
+		p=q+r;
+	}
+}

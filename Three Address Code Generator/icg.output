@@ -1,0 +1,2436 @@
+Terminals unused in grammar
+
+   BREAK
+
+
+State 12 conflicts: 3 shift/reduce
+State 21 conflicts: 4 shift/reduce
+
+
+Grammar
+
+    0 $accept: startSym $end
+
+    1 startSym: program
+
+    2 program: program construct
+    3        | construct
+
+    4 construct: block
+    5          | WHILE '(' bool ')' block
+    6          | IF '(' bool ')' block
+    7          | IF '(' bool ')' block ELSE block
+    8          | SWITCH '(' ID ')' '{' caseblock '}'
+
+    9 caseblock: CASE expr ':' block caseblock
+   10          | CASE expr ':' block
+   11          | DEFAULT ':' block
+
+   12 block: '{' list '}'
+   13      | '{' program '}'
+   14      | list
+
+   15 list: stat
+   16     | list stat
+   17     | list error '\n'
+
+   18 stat: ';'
+   19     | dec ';'
+   20     | text '=' expr ';'
+   21     | text PE expr ';'
+   22     | text ME expr ';'
+   23     | dec '=' expr ';'
+
+   24 dec: TYPES text
+
+   25 bool: expr REL_OPT expr
+   26     | bool OR bool
+   27     | bool AND bool
+   28     | NOT '(' bool ')'
+   29     | '(' bool ')'
+   30     | TRUE
+   31     | FALSE
+
+   32 expr: '(' expr ')'
+   33     | expr '@' expr
+   34     | expr '*' expr
+   35     | expr '/' expr
+   36     | expr '%' expr
+   37     | expr '+' expr
+   38     | expr '-' expr
+   39     | expr '|' expr
+   40     | expr '&' expr
+   41     | expr '^' expr
+   42     | text
+   43     | number
+   44     | '-' number
+   45     | text INCR
+   46     | text DECR
+   47     | INCR text
+   48     | DECR text
+
+   49 text: ID
+
+   50 number: DIGIT
+   51       | FLOAT
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'\n' (10) 17
+'%' (37) 36
+'&' (38) 40
+'(' (40) 5 6 7 8 28 29 32
+')' (41) 5 6 7 8 28 29 32
+'*' (42) 34
+'+' (43) 37
+'-' (45) 38 44
+'/' (47) 35
+':' (58) 9 10 11
+';' (59) 18 19 20 21 22 23
+'=' (61) 20 23
+'@' (64) 33
+'^' (94) 41
+'{' (123) 8 12 13
+'|' (124) 39
+'}' (125) 8 12 13
+error (256) 17
+DIGIT (258) 50
+FLOAT (259) 51
+ID (260) 8 49
+IF (261) 6 7
+ELSE (262) 7
+WHILE (263) 5
+TYPES (264) 24
+REL_OPT (265) 25
+OR (266) 26
+AND (267) 27
+CASE (268) 9 10
+SWITCH (269) 8
+NOT (270) 28
+PE (271) 21
+ME (272) 22
+INCR (273) 45 47
+DEFAULT (274) 11
+DECR (275) 46 48
+TRUE (276) 30
+FALSE (277) 31
+BREAK (278)
+
+
+Nonterminals, with rules where they appear
+
+$accept (41)
+    on left: 0
+startSym (42)
+    on left: 1, on right: 0
+program (43)
+    on left: 2 3, on right: 1 2 13
+construct (44)
+    on left: 4 5 6 7 8, on right: 2 3
+caseblock (45)
+    on left: 9 10 11, on right: 8 9
+block (46)
+    on left: 12 13 14, on right: 4 5 6 7 9 10 11
+list (47)
+    on left: 15 16 17, on right: 12 14 16 17
+stat (48)
+    on left: 18 19 20 21 22 23, on right: 15 16
+dec (49)
+    on left: 24, on right: 19 23
+bool (50)
+    on left: 25 26 27 28 29 30 31, on right: 5 6 7 26 27 28 29
+expr (51)
+    on left: 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48, on right:
+    9 10 20 21 22 23 25 32 33 34 35 36 37 38 39 40 41
+text (52)
+    on left: 49, on right: 20 21 22 24 42 45 46 47 48
+number (53)
+    on left: 50 51, on right: 43 44
+
+
+State 0
+
+    0 $accept: . startSym $end
+    1 startSym: . program
+    2 program: . program construct
+    3        | . construct
+    4 construct: . block
+    5          | . WHILE '(' bool ')' block
+    6          | . IF '(' bool ')' block
+    7          | . IF '(' bool ')' block ELSE block
+    8          | . SWITCH '(' ID ')' '{' caseblock '}'
+   12 block: . '{' list '}'
+   13      | . '{' program '}'
+   14      | . list
+   15 list: . stat
+   16     | . list stat
+   17     | . list error '\n'
+   18 stat: . ';'
+   19     | . dec ';'
+   20     | . text '=' expr ';'
+   21     | . text PE expr ';'
+   22     | . text ME expr ';'
+   23     | . dec '=' expr ';'
+   24 dec: . TYPES text
+   49 text: . ID
+
+    ID      shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    TYPES   shift, and go to state 4
+    SWITCH  shift, and go to state 5
+    ';'     shift, and go to state 6
+    '{'     shift, and go to state 7
+
+    startSym   go to state 8
+    program    go to state 9
+    construct  go to state 10
+    block      go to state 11
+    list       go to state 12
+    stat       go to state 13
+    dec        go to state 14
+    text       go to state 15
+
+
+State 1
+
+   49 text: ID .
+
+    $default  reduce using rule 49 (text)
+
+
+State 2
+
+    6 construct: IF . '(' bool ')' block
+    7          | IF . '(' bool ')' block ELSE block
+
+    '('  shift, and go to state 16
+
+
+State 3
+
+    5 construct: WHILE . '(' bool ')' block
+
+    '('  shift, and go to state 17
+
+
+State 4
+
+   24 dec: TYPES . text
+   49 text: . ID
+
+    ID  shift, and go to state 1
+
+    text  go to state 18
+
+
+State 5
+
+    8 construct: SWITCH . '(' ID ')' '{' caseblock '}'
+
+    '('  shift, and go to state 19
+
+
+State 6
+
+   18 stat: ';' .
+
+    $default  reduce using rule 18 (stat)
+
+
+State 7
+
+    2 program: . program construct
+    3        | . construct
+    4 construct: . block
+    5          | . WHILE '(' bool ')' block
+    6          | . IF '(' bool ')' block
+    7          | . IF '(' bool ')' block ELSE block
+    8          | . SWITCH '(' ID ')' '{' caseblock '}'
+   12 block: . '{' list '}'
+   12      | '{' . list '}'
+   13      | . '{' program '}'
+   13      | '{' . program '}'
+   14      | . list
+   15 list: . stat
+   16     | . list stat
+   17     | . list error '\n'
+   18 stat: . ';'
+   19     | . dec ';'
+   20     | . text '=' expr ';'
+   21     | . text PE expr ';'
+   22     | . text ME expr ';'
+   23     | . dec '=' expr ';'
+   24 dec: . TYPES text
+   49 text: . ID
+
+    ID      shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    TYPES   shift, and go to state 4
+    SWITCH  shift, and go to state 5
+    ';'     shift, and go to state 6
+    '{'     shift, and go to state 7
+
+    program    go to state 20
+    construct  go to state 10
+    block      go to state 11
+    list       go to state 21
+    stat       go to state 13
+    dec        go to state 14
+    text       go to state 15
+
+
+State 8
+
+    0 $accept: startSym . $end
+
+    $end  shift, and go to state 22
+
+
+State 9
+
+    1 startSym: program .  [$end]
+    2 program: program . construct
+    4 construct: . block
+    5          | . WHILE '(' bool ')' block
+    6          | . IF '(' bool ')' block
+    7          | . IF '(' bool ')' block ELSE block
+    8          | . SWITCH '(' ID ')' '{' caseblock '}'
+   12 block: . '{' list '}'
+   13      | . '{' program '}'
+   14      | . list
+   15 list: . stat
+   16     | . list stat
+   17     | . list error '\n'
+   18 stat: . ';'
+   19     | . dec ';'
+   20     | . text '=' expr ';'
+   21     | . text PE expr ';'
+   22     | . text ME expr ';'
+   23     | . dec '=' expr ';'
+   24 dec: . TYPES text
+   49 text: . ID
+
+    ID      shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    TYPES   shift, and go to state 4
+    SWITCH  shift, and go to state 5
+    ';'     shift, and go to state 6
+    '{'     shift, and go to state 7
+
+    $default  reduce using rule 1 (startSym)
+
+    construct  go to state 23
+    block      go to state 11
+    list       go to state 12
+    stat       go to state 13
+    dec        go to state 14
+    text       go to state 15
+
+
+State 10
+
+    3 program: construct .
+
+    $default  reduce using rule 3 (program)
+
+
+State 11
+
+    4 construct: block .
+
+    $default  reduce using rule 4 (construct)
+
+
+State 12
+
+   14 block: list .  [$end, ID, IF, ELSE, WHILE, TYPES, CASE, SWITCH, DEFAULT, ';', '{', '}']
+   16 list: list . stat
+   17     | list . error '\n'
+   18 stat: . ';'
+   19     | . dec ';'
+   20     | . text '=' expr ';'
+   21     | . text PE expr ';'
+   22     | . text ME expr ';'
+   23     | . dec '=' expr ';'
+   24 dec: . TYPES text
+   49 text: . ID
+
+    error  shift, and go to state 24
+    ID     shift, and go to state 1
+    TYPES  shift, and go to state 4
+    ';'    shift, and go to state 6
+
+    $end     reduce using rule 14 (block)
+    ID       [reduce using rule 14 (block)]
+    IF       reduce using rule 14 (block)
+    ELSE     reduce using rule 14 (block)
+    WHILE    reduce using rule 14 (block)
+    TYPES    [reduce using rule 14 (block)]
+    CASE     reduce using rule 14 (block)
+    SWITCH   reduce using rule 14 (block)
+    DEFAULT  reduce using rule 14 (block)
+    ';'      [reduce using rule 14 (block)]
+    '{'      reduce using rule 14 (block)
+    '}'      reduce using rule 14 (block)
+
+    stat  go to state 25
+    dec   go to state 14
+    text  go to state 15
+
+
+State 13
+
+   15 list: stat .
+
+    $default  reduce using rule 15 (list)
+
+
+State 14
+
+   19 stat: dec . ';'
+   23     | dec . '=' expr ';'
+
+    '='  shift, and go to state 26
+    ';'  shift, and go to state 27
+
+
+State 15
+
+   20 stat: text . '=' expr ';'
+   21     | text . PE expr ';'
+   22     | text . ME expr ';'
+
+    PE   shift, and go to state 28
+    ME   shift, and go to state 29
+    '='  shift, and go to state 30
+
+
+State 16
+
+    6 construct: IF '(' . bool ')' block
+    7          | IF '(' . bool ')' block ELSE block
+   25 bool: . expr REL_OPT expr
+   26     | . bool OR bool
+   27     | . bool AND bool
+   28     | . NOT '(' bool ')'
+   29     | . '(' bool ')'
+   30     | . TRUE
+   31     | . FALSE
+   32 expr: . '(' expr ')'
+   33     | . expr '@' expr
+   34     | . expr '*' expr
+   35     | . expr '/' expr
+   36     | . expr '%' expr
+   37     | . expr '+' expr
+   38     | . expr '-' expr
+   39     | . expr '|' expr
+   40     | . expr '&' expr
+   41     | . expr '^' expr
+   42     | . text
+   43     | . number
+   44     | . '-' number
+   45     | . text INCR
+   46     | . text DECR
+   47     | . INCR text
+   48     | . DECR text
+   49 text: . ID
+   50 number: . DIGIT
+   51       | . FLOAT
+
+    DIGIT  shift, and go to state 31
+    FLOAT  shift, and go to state 32
+    ID     shift, and go to state 1
+    NOT    shift, and go to state 33
+    INCR   shift, and go to state 34
+    DECR   shift, and go to state 35
+    TRUE   shift, and go to state 36
+    FALSE  shift, and go to state 37
+    '-'    shift, and go to state 38
+    '('    shift, and go to state 39
+
+    bool    go to state 40
+    expr    go to state 41
+    text    go to state 42
+    number  go to state 43
+
+
+State 17
+
+    5 construct: WHILE '(' . bool ')' block
+   25 bool: . expr REL_OPT expr
+   26     | . bool OR bool
+   27     | . bool AND bool
+   28     | . NOT '(' bool ')'
+   29     | . '(' bool ')'
+   30     | . TRUE
+   31     | . FALSE
+   32 expr: . '(' expr ')'
+   33     | . expr '@' expr
+   34     | . expr '*' expr
+   35     | . expr '/' expr
+   36     | . expr '%' expr
+   37     | . expr '+' expr
+   38     | . expr '-' expr
+   39     | . expr '|' expr
+   40     | . expr '&' expr
+   41     | . expr '^' expr
+   42     | . text
+   43     | . number
+   44     | . '-' number
+   45     | . text INCR
+   46     | . text DECR
+   47     | . INCR text
+   48     | . DECR text
+   49 text: . ID
+   50 number: . DIGIT
+   51       | . FLOAT
+
+    DIGIT  shift, and go to state 31
+    FLOAT  shift, and go to state 32
+    ID     shift, and go to state 1
+    NOT    shift, and go to state 33
+    INCR   shift, and go to state 34
+    DECR   shift, and go to state 35
+    TRUE   shift, and go to state 36
+    FALSE  shift, and go to state 37
+    '-'    shift, and go to state 38
+    '('    shift, and go to state 39
+
+    bool    go to state 44
+    expr    go to state 41
+    text    go to state 42
+    number  go to state 43
+
+
+State 18
+
+   24 dec: TYPES text .
+
+    $default  reduce using rule 24 (dec)
+
+
+State 19
+
+    8 construct: SWITCH '(' . ID ')' '{' caseblock '}'
+
+    ID  shift, and go to state 45
+
+
+State 20
+
+    2 program: program . construct
+    4 construct: . block
+    5          | . WHILE '(' bool ')' block
+    6          | . IF '(' bool ')' block
+    7          | . IF '(' bool ')' block ELSE block
+    8          | . SWITCH '(' ID ')' '{' caseblock '}'
+   12 block: . '{' list '}'
+   13      | . '{' program '}'
+   13      | '{' program . '}'
+   14      | . list
+   15 list: . stat
+   16     | . list stat
+   17     | . list error '\n'
+   18 stat: . ';'
+   19     | . dec ';'
+   20     | . text '=' expr ';'
+   21     | . text PE expr ';'
+   22     | . text ME expr ';'
+   23     | . dec '=' expr ';'
+   24 dec: . TYPES text
+   49 text: . ID
+
+    ID      shift, and go to state 1
+    IF      shift, and go to state 2
+    WHILE   shift, and go to state 3
+    TYPES   shift, and go to state 4
+    SWITCH  shift, and go to state 5
+    ';'     shift, and go to state 6
+    '{'     shift, and go to state 7
+    '}'     shift, and go to state 46
+
+    construct  go to state 23
+    block      go to state 11
+    list       go to state 12
+    stat       go to state 13
+    dec        go to state 14
+    text       go to state 15
+
+
+State 21
+
+   12 block: '{' list . '}'
+   14      | list .  [ID, IF, WHILE, TYPES, SWITCH, ';', '{', '}']
+   16 list: list . stat
+   17     | list . error '\n'
+   18 stat: . ';'
+   19     | . dec ';'
+   20     | . text '=' expr ';'
+   21     | . text PE expr ';'
+   22     | . text ME expr ';'
+   23     | . dec '=' expr ';'
+   24 dec: . TYPES text
+   49 text: . ID
+
+    error  shift, and go to state 24
+    ID     shift, and go to state 1
+    TYPES  shift, and go to state 4
+    ';'    shift, and go to state 6
+    '}'    shift, and go to state 47
+
+    ID      [reduce using rule 14 (block)]
+    IF      reduce using rule 14 (block)
+    WHILE   reduce using rule 14 (block)
+    TYPES   [reduce using rule 14 (block)]
+    SWITCH  reduce using rule 14 (block)
+    ';'     [reduce using rule 14 (block)]
+    '{'     reduce using rule 14 (block)
+    '}'     [reduce using rule 14 (block)]
+
+    stat  go to state 25
+    dec   go to state 14
+    text  go to state 15
+
+
+State 22
+
+    0 $accept: startSym $end .
+
+    $default  accept
+
+
+State 23
+
+    2 program: program construct .
+
+    $default  reduce using rule 2 (program)
+
+
+State 24
+
+   17 list: list error . '\n'
+
+    '\n'  shift, and go to state 48
+
+
+State 25
+
+   16 list: list stat .
+
+    $default  reduce using rule 16 (list)
+
+
+State 26
+
+   23 stat: dec '=' . expr ';'
+   32 expr: . '(' expr ')'
+   33     | . expr '@' expr
+   34     | . expr '*' expr
+   35     | . expr '/' expr
+   36     | . expr '%' expr
+   37     | . expr '+' expr
+   38     | . expr '-' expr
+   39     | . expr '|' expr
+   40     | . expr '&' expr
+   41     | . expr '^' expr
+   42     | . text
+   43     | . number
+   44     | . '-' number
+   45     | . text INCR
+   46     | . text DECR
+   47     | . INCR text
+   48     | . DECR text
+   49 text: . ID
+   50 number: . DIGIT
+   51       | . FLOAT
+
+    DIGIT  shift, and go to state 31
+    FLOAT  shift, and go to state 32
+    ID     shift, and go to state 1
+    INCR   shift, and go to state 34
+    DECR   shift, and go to state 35
+    '-'    shift, and go to state 38
+    '('    shift, and go to state 49
+
+    expr    go to state 50
+    text    go to state 42
+    number  go to state 43
+
+
+State 27
+
+   19 stat: dec ';' .
+
+    $default  reduce using rule 19 (stat)
+
+
+State 28
+
+   21 stat: text PE . expr ';'
+   32 expr: . '(' expr ')'
+   33     | . expr '@' expr
+   34     | . expr '*' expr
+   35     | . expr '/' expr
+   36     | . expr '%' expr
+   37     | . expr '+' expr
+   38     | . expr '-' expr
+   39     | . expr '|' expr
+   40     | . expr '&' expr
+   41     | . expr '^' expr
+   42     | . text
+   43     | . number
+   44     | . '-' number
+   45     | . text INCR
+   46     | . text DECR
+   47     | . INCR text
+   48     | . DECR text
+   49 text: . ID
+   50 number: . DIGIT
+   51       | . FLOAT
+
+    DIGIT  shift, and go to state 31
+    FLOAT  shift, and go to state 32
+    ID     shift, and go to state 1
+    INCR   shift, and go to state 34
+    DECR   shift, and go to state 35
+    '-'    shift, and go to state 38
+    '('    shift, and go to state 49
+
+    expr    go to state 51
+    text    go to state 42
+    number  go to state 43
+
+
+State 29
+
+   22 stat: text ME . expr ';'
+   32 expr: . '(' expr ')'
+   33     | . expr '@' expr
+   34     | . expr '*' expr
+   35     | . expr '/' expr
+   36     | . expr '%' expr
+   37     | . expr '+' expr
+   38     | . expr '-' expr
+   39     | . expr '|' expr
+   40     | . expr '&' expr
+   41     | . expr '^' expr
+   42     | . text
+   43     | . number
+   44     | . '-' number
+   45     | . text INCR
+   46     | . text DECR
+   47     | . INCR text
+   48     | . DECR text
+   49 text: . ID
+   50 number: . DIGIT
+   51       | . FLOAT
+
+    DIGIT  shift, and go to state 31
+    FLOAT  shift, and go to state 32
+    ID     shift, and go to state 1
+    INCR   shift, and go to state 34
+    DECR   shift, and go to state 35
+    '-'    shift, and go to state 38
+    '('    shift, and go to state 49
+
+    expr    go to state 52
+    text    go to state 42
+    number  go to state 43
+
+
+State 30
+
+   20 stat: text '=' . expr ';'
+   32 expr: . '(' expr ')'
+   33     | . expr '@' expr
+   34     | . expr '*' expr
+   35     | . expr '/' expr
+   36     | . expr '%' expr
+   37     | . expr '+' expr
+   38     | . expr '-' expr
+   39     | . expr '|' expr
+   40     | . expr '&' expr
+   41     | . expr '^' expr
+   42     | . text
+   43     | . number
+   44     | . '-' number
+   45     | . text INCR
+   46     | . text DECR
+   47     | . INCR text
+   48     | . DECR text
+   49 text: . ID
+   50 number: . DIGIT
+   51       | . FLOAT
+
+    DIGIT  shift, and go to state 31
+    FLOAT  shift, and go to state 32
+    ID     shift, and go to state 1
+    INCR   shift, and go to state 34
+    DECR   shift, and go to state 35
+    '-'    shift, and go to state 38
+    '('    shift, and go to state 49
+
+    expr    go to state 53
+    text    go to state 42
+    number  go to state 43
+
+
+State 31
+
+   50 number: DIGIT .
+
+    $default  reduce using rule 50 (number)
+
+
+State 32
+
+   51 number: FLOAT .
+
+    $default  reduce using rule 51 (number)
+
+
+State 33
+
+   28 bool: NOT . '(' bool ')'
+
+    '('  shift, and go to state 54
+
+
+State 34
+
+   47 expr: INCR . text
+   49 text: . ID
+
+    ID  shift, and go to state 1
+
+    text  go to state 55
+
+
+State 35
+
+   48 expr: DECR . text
+   49 text: . ID
+
+    ID  shift, and go to state 1
+
+    text  go to state 56
+
+
+State 36
+
+   30 bool: TRUE .
+
+    $default  reduce using rule 30 (bool)
+
+
+State 37
+
+   31 bool: FALSE .
+
+    $default  reduce using rule 31 (bool)
+
+
+State 38
+
+   44 expr: '-' . number
+   50 number: . DIGIT
+   51       | . FLOAT
+
+    DIGIT  shift, and go to state 31
+    FLOAT  shift, and go to state 32
+
+    number  go to state 57
+
+
+State 39
+
+   25 bool: . expr REL_OPT expr
+   26     | . bool OR bool
+   27     | . bool AND bool
+   28     | . NOT '(' bool ')'
+   29     | . '(' bool ')'
+   29     | '(' . bool ')'
+   30     | . TRUE
+   31     | . FALSE
+   32 expr: . '(' expr ')'
+   32     | '(' . expr ')'
+   33     | . expr '@' expr
+   34     | . expr '*' expr
+   35     | . expr '/' expr
+   36     | . expr '%' expr
+   37     | . expr '+' expr
+   38     | . expr '-' expr
+   39     | . expr '|' expr
+   40     | . expr '&' expr
+   41     | . expr '^' expr
+   42     | . text
+   43     | . number
+   44     | . '-' number
+   45     | . text INCR
+   46     | . text DECR
+   47     | . INCR text
+   48     | . DECR text
+   49 text: . ID
+   50 number: . DIGIT
+   51       | . FLOAT
+
+    DIGIT  shift, and go to state 31
+    FLOAT  shift, and go to state 32
+    ID     shift, and go to state 1
+    NOT    shift, and go to state 33
+    INCR   shift, and go to state 34
+    DECR   shift, and go to state 35
+    TRUE   shift, and go to state 36
+    FALSE  shift, and go to state 37
+    '-'    shift, and go to state 38
+    '('    shift, and go to state 39
+
+    bool    go to state 58
+    expr    go to state 59
+    text    go to state 42
+    number  go to state 43
+
+
+State 40
+
+    6 construct: IF '(' bool . ')' block
+    7          | IF '(' bool . ')' block ELSE block
+   26 bool: bool . OR bool
+   27     | bool . AND bool
+
+    OR   shift, and go to state 60
+    AND  shift, and go to state 61
+    ')'  shift, and go to state 62
+
+
+State 41
+
+   25 bool: expr . REL_OPT expr
+   33 expr: expr . '@' expr
+   34     | expr . '*' expr
+   35     | expr . '/' expr
+   36     | expr . '%' expr
+   37     | expr . '+' expr
+   38     | expr . '-' expr
+   39     | expr . '|' expr
+   40     | expr . '&' expr
+   41     | expr . '^' expr
+
+    REL_OPT  shift, and go to state 63
+    '+'      shift, and go to state 64
+    '-'      shift, and go to state 65
+    '*'      shift, and go to state 66
+    '/'      shift, and go to state 67
+    '^'      shift, and go to state 68
+    '%'      shift, and go to state 69
+    '@'      shift, and go to state 70
+    '&'      shift, and go to state 71
+    '|'      shift, and go to state 72
+
+
+State 42
+
+   42 expr: text .  [REL_OPT, OR, AND, '+', '-', '*', '/', '^', '%', ';', '@', ':', '&', '|', ')']
+   45     | text . INCR
+   46     | text . DECR
+
+    INCR  shift, and go to state 73
+    DECR  shift, and go to state 74
+
+    $default  reduce using rule 42 (expr)
+
+
+State 43
+
+   43 expr: number .
+
+    $default  reduce using rule 43 (expr)
+
+
+State 44
+
+    5 construct: WHILE '(' bool . ')' block
+   26 bool: bool . OR bool
+   27     | bool . AND bool
+
+    OR   shift, and go to state 60
+    AND  shift, and go to state 61
+    ')'  shift, and go to state 75
+
+
+State 45
+
+    8 construct: SWITCH '(' ID . ')' '{' caseblock '}'
+
+    ')'  shift, and go to state 76
+
+
+State 46
+
+   13 block: '{' program '}' .
+
+    $default  reduce using rule 13 (block)
+
+
+State 47
+
+   12 block: '{' list '}' .
+
+    $default  reduce using rule 12 (block)
+
+
+State 48
+
+   17 list: list error '\n' .
+
+    $default  reduce using rule 17 (list)
+
+
+State 49
+
+   32 expr: . '(' expr ')'
+   32     | '(' . expr ')'
+   33     | . expr '@' expr
+   34     | . expr '*' expr
+   35     | . expr '/' expr
+   36     | . expr '%' expr
+   37     | . expr '+' expr
+   38     | . expr '-' expr
+   39     | . expr '|' expr
+   40     | . expr '&' expr
+   41     | . expr '^' expr
+   42     | . text
+   43     | . number
+   44     | . '-' number
+   45     | . text INCR
+   46     | . text DECR
+   47     | . INCR text
+   48     | . DECR text
+   49 text: . ID
+   50 number: . DIGIT
+   51       | . FLOAT
+
+    DIGIT  shift, and go to state 31
+    FLOAT  shift, and go to state 32
+    ID     shift, and go to state 1
+    INCR   shift, and go to state 34
+    DECR   shift, and go to state 35
+    '-'    shift, and go to state 38
+    '('    shift, and go to state 49
+
+    expr    go to state 77
+    text    go to state 42
+    number  go to state 43
+
+
+State 50
+
+   23 stat: dec '=' expr . ';'
+   33 expr: expr . '@' expr
+   34     | expr . '*' expr
+   35     | expr . '/' expr
+   36     | expr . '%' expr
+   37     | expr . '+' expr
+   38     | expr . '-' expr
+   39     | expr . '|' expr
+   40     | expr . '&' expr
+   41     | expr . '^' expr
+
+    '+'  shift, and go to state 64
+    '-'  shift, and go to state 65
+    '*'  shift, and go to state 66
+    '/'  shift, and go to state 67
+    '^'  shift, and go to state 68
+    '%'  shift, and go to state 69
+    ';'  shift, and go to state 78
+    '@'  shift, and go to state 70
+    '&'  shift, and go to state 71
+    '|'  shift, and go to state 72
+
+
+State 51
+
+   21 stat: text PE expr . ';'
+   33 expr: expr . '@' expr
+   34     | expr . '*' expr
+   35     | expr . '/' expr
+   36     | expr . '%' expr
+   37     | expr . '+' expr
+   38     | expr . '-' expr
+   39     | expr . '|' expr
+   40     | expr . '&' expr
+   41     | expr . '^' expr
+
+    '+'  shift, and go to state 64
+    '-'  shift, and go to state 65
+    '*'  shift, and go to state 66
+    '/'  shift, and go to state 67
+    '^'  shift, and go to state 68
+    '%'  shift, and go to state 69
+    ';'  shift, and go to state 79
+    '@'  shift, and go to state 70
+    '&'  shift, and go to state 71
+    '|'  shift, and go to state 72
+
+
+State 52
+
+   22 stat: text ME expr . ';'
+   33 expr: expr . '@' expr
+   34     | expr . '*' expr
+   35     | expr . '/' expr
+   36     | expr . '%' expr
+   37     | expr . '+' expr
+   38     | expr . '-' expr
+   39     | expr . '|' expr
+   40     | expr . '&' expr
+   41     | expr . '^' expr
+
+    '+'  shift, and go to state 64
+    '-'  shift, and go to state 65
+    '*'  shift, and go to state 66
+    '/'  shift, and go to state 67
+    '^'  shift, and go to state 68
+    '%'  shift, and go to state 69
+    ';'  shift, and go to state 80
+    '@'  shift, and go to state 70
+    '&'  shift, and go to state 71
+    '|'  shift, and go to state 72
+
+
+State 53
+
+   20 stat: text '=' expr . ';'
+   33 expr: expr . '@' expr
+   34     | expr . '*' expr
+   35     | expr . '/' expr
+   36     | expr . '%' expr
+   37     | expr . '+' expr
+   38     | expr . '-' expr
+   39     | expr . '|' expr
+   40     | expr . '&' expr
+   41     | expr . '^' expr
+
+    '+'  shift, and go to state 64
+    '-'  shift, and go to state 65
+    '*'  shift, and go to state 66
+    '/'  shift, and go to state 67
+    '^'  shift, and go to state 68
+    '%'  shift, and go to state 69
+    ';'  shift, and go to state 81
+    '@'  shift, and go to state 70
+    '&'  shift, and go to state 71
+    '|'  shift, and go to state 72
+
+
+State 54
+
+   25 bool: . expr REL_OPT expr
+   26     | . bool OR bool
+   27     | . bool AND bool
+   28     | . NOT '(' bool ')'
+   28     | NOT '(' . bool ')'
+   29     | . '(' bool ')'
+   30     | . TRUE
+   31     | . FALSE
+   32 expr: . '(' expr ')'
+   33     | . expr '@' expr
+   34     | . expr '*' expr
+   35     | . expr '/' expr
+   36     | . expr '%' expr
+   37     | . expr '+' expr
+   38     | . expr '-' expr
+   39     | . expr '|' expr
+   40     | . expr '&' expr
+   41     | . expr '^' expr
+   42     | . text
+   43     | . number
+   44     | . '-' number
+   45     | . text INCR
+   46     | . text DECR
+   47     | . INCR text
+   48     | . DECR text
+   49 text: . ID
+   50 number: . DIGIT
+   51       | . FLOAT
+
+    DIGIT  shift, and go to state 31
+    FLOAT  shift, and go to state 32
+    ID     shift, and go to state 1
+    NOT    shift, and go to state 33
+    INCR   shift, and go to state 34
+    DECR   shift, and go to state 35
+    TRUE   shift, and go to state 36
+    FALSE  shift, and go to state 37
+    '-'    shift, and go to state 38
+    '('    shift, and go to state 39
+
+    bool    go to state 82
+    expr    go to state 41
+    text    go to state 42
+    number  go to state 43
+
+
+State 55
+
+   47 expr: INCR text .
+
+    $default  reduce using rule 47 (expr)
+
+
+State 56
+
+   48 expr: DECR text .
+
+    $default  reduce using rule 48 (expr)
+
+
+State 57
+
+   44 expr: '-' number .
+
+    $default  reduce using rule 44 (expr)
+
+
+State 58
+
+   26 bool: bool . OR bool
+   27     | bool . AND bool
+   29     | '(' bool . ')'
+
+    OR   shift, and go to state 60
+    AND  shift, and go to state 61
+    ')'  shift, and go to state 83
+
+
+State 59
+
+   25 bool: expr . REL_OPT expr
+   32 expr: '(' expr . ')'
+   33     | expr . '@' expr
+   34     | expr . '*' expr
+   35     | expr . '/' expr
+   36     | expr . '%' expr
+   37     | expr . '+' expr
+   38     | expr . '-' expr
+   39     | expr . '|' expr
+   40     | expr . '&' expr
+   41     | expr . '^' expr
+
+    REL_OPT  shift, and go to state 63
+    '+'      shift, and go to state 64
+    '-'      shift, and go to state 65
+    '*'      shift, and go to state 66
+    '/'      shift, and go to state 67
+    '^'      shift, and go to state 68
+    '%'      shift, and go to state 69
+    '@'      shift, and go to state 70
+    '&'      shift, and go to state 71
+    '|'      shift, and go to state 72
+    ')'      shift, and go to state 84
+
+
+State 60
+
+   25 bool: . expr REL_OPT expr
+   26     | . bool OR bool
+   26     | bool OR . bool
+   27     | . bool AND bool
+   28     | . NOT '(' bool ')'
+   29     | . '(' bool ')'
+   30     | . TRUE
+   31     | . FALSE
+   32 expr: . '(' expr ')'
+   33     | . expr '@' expr
+   34     | . expr '*' expr
+   35     | . expr '/' expr
+   36     | . expr '%' expr
+   37     | . expr '+' expr
+   38     | . expr '-' expr
+   39     | . expr '|' expr
+   40     | . expr '&' expr
+   41     | . expr '^' expr
+   42     | . text
+   43     | . number
+   44     | . '-' number
+   45     | . text INCR
+   46     | . text DECR
+   47     | . INCR text
+   48     | . DECR text
+   49 text: . ID
+   50 number: . DIGIT
+   51       | . FLOAT
+
+    DIGIT  shift, and go to state 31
+    FLOAT  shift, and go to state 32
+    ID     shift, and go to state 1
+    NOT    shift, and go to state 33
+    INCR   shift, and go to state 34
+    DECR   shift, and go to state 35
+    TRUE   shift, and go to state 36
+    FALSE  shift, and go to state 37
+    '-'    shift, and go to state 38
+    '('    shift, and go to state 39
+
+    bool    go to state 85
+    expr    go to state 41
+    text    go to state 42
+    number  go to state 43
+
+
+State 61
+
+   25 bool: . expr REL_OPT expr
+   26     | . bool OR bool
+   27     | . bool AND bool
+   27     | bool AND . bool
+   28     | . NOT '(' bool ')'
+   29     | . '(' bool ')'
+   30     | . TRUE
+   31     | . FALSE
+   32 expr: . '(' expr ')'
+   33     | . expr '@' expr
+   34     | . expr '*' expr
+   35     | . expr '/' expr
+   36     | . expr '%' expr
+   37     | . expr '+' expr
+   38     | . expr '-' expr
+   39     | . expr '|' expr
+   40     | . expr '&' expr
+   41     | . expr '^' expr
+   42     | . text
+   43     | . number
+   44     | . '-' number
+   45     | . text INCR
+   46     | . text DECR
+   47     | . INCR text
+   48     | . DECR text
+   49 text: . ID
+   50 number: . DIGIT
+   51       | . FLOAT
+
+    DIGIT  shift, and go to state 31
+    FLOAT  shift, and go to state 32
+    ID     shift, and go to state 1
+    NOT    shift, and go to state 33
+    INCR   shift, and go to state 34
+    DECR   shift, and go to state 35
+    TRUE   shift, and go to state 36
+    FALSE  shift, and go to state 37
+    '-'    shift, and go to state 38
+    '('    shift, and go to state 39
+
+    bool    go to state 86
+    expr    go to state 41
+    text    go to state 42
+    number  go to state 43
+
+
+State 62
+
+    6 construct: IF '(' bool ')' . block
+    7          | IF '(' bool ')' . block ELSE block
+   12 block: . '{' list '}'
+   13      | . '{' program '}'
+   14      | . list
+   15 list: . stat
+   16     | . list stat
+   17     | . list error '\n'
+   18 stat: . ';'
+   19     | . dec ';'
+   20     | . text '=' expr ';'
+   21     | . text PE expr ';'
+   22     | . text ME expr ';'
+   23     | . dec '=' expr ';'
+   24 dec: . TYPES text
+   49 text: . ID
+
+    ID     shift, and go to state 1
+    TYPES  shift, and go to state 4
+    ';'    shift, and go to state 6
+    '{'    shift, and go to state 7
+
+    block  go to state 87
+    list   go to state 12
+    stat   go to state 13
+    dec    go to state 14
+    text   go to state 15
+
+
+State 63
+
+   25 bool: expr REL_OPT . expr
+   32 expr: . '(' expr ')'
+   33     | . expr '@' expr
+   34     | . expr '*' expr
+   35     | . expr '/' expr
+   36     | . expr '%' expr
+   37     | . expr '+' expr
+   38     | . expr '-' expr
+   39     | . expr '|' expr
+   40     | . expr '&' expr
+   41     | . expr '^' expr
+   42     | . text
+   43     | . number
+   44     | . '-' number
+   45     | . text INCR
+   46     | . text DECR
+   47     | . INCR text
+   48     | . DECR text
+   49 text: . ID
+   50 number: . DIGIT
+   51       | . FLOAT
+
+    DIGIT  shift, and go to state 31
+    FLOAT  shift, and go to state 32
+    ID     shift, and go to state 1
+    INCR   shift, and go to state 34
+    DECR   shift, and go to state 35
+    '-'    shift, and go to state 38
+    '('    shift, and go to state 49
+
+    expr    go to state 88
+    text    go to state 42
+    number  go to state 43
+
+
+State 64
+
+   32 expr: . '(' expr ')'
+   33     | . expr '@' expr
+   34     | . expr '*' expr
+   35     | . expr '/' expr
+   36     | . expr '%' expr
+   37     | . expr '+' expr
+   37     | expr '+' . expr
+   38     | . expr '-' expr
+   39     | . expr '|' expr
+   40     | . expr '&' expr
+   41     | . expr '^' expr
+   42     | . text
+   43     | . number
+   44     | . '-' number
+   45     | . text INCR
+   46     | . text DECR
+   47     | . INCR text
+   48     | . DECR text
+   49 text: . ID
+   50 number: . DIGIT
+   51       | . FLOAT
+
+    DIGIT  shift, and go to state 31
+    FLOAT  shift, and go to state 32
+    ID     shift, and go to state 1
+    INCR   shift, and go to state 34
+    DECR   shift, and go to state 35
+    '-'    shift, and go to state 38
+    '('    shift, and go to state 49
+
+    expr    go to state 89
+    text    go to state 42
+    number  go to state 43
+
+
+State 65
+
+   32 expr: . '(' expr ')'
+   33     | . expr '@' expr
+   34     | . expr '*' expr
+   35     | . expr '/' expr
+   36     | . expr '%' expr
+   37     | . expr '+' expr
+   38     | . expr '-' expr
+   38     | expr '-' . expr
+   39     | . expr '|' expr
+   40     | . expr '&' expr
+   41     | . expr '^' expr
+   42     | . text
+   43     | . number
+   44     | . '-' number
+   45     | . text INCR
+   46     | . text DECR
+   47     | . INCR text
+   48     | . DECR text
+   49 text: . ID
+   50 number: . DIGIT
+   51       | . FLOAT
+
+    DIGIT  shift, and go to state 31
+    FLOAT  shift, and go to state 32
+    ID     shift, and go to state 1
+    INCR   shift, and go to state 34
+    DECR   shift, and go to state 35
+    '-'    shift, and go to state 38
+    '('    shift, and go to state 49
+
+    expr    go to state 90
+    text    go to state 42
+    number  go to state 43
+
+
+State 66
+
+   32 expr: . '(' expr ')'
+   33     | . expr '@' expr
+   34     | . expr '*' expr
+   34     | expr '*' . expr
+   35     | . expr '/' expr
+   36     | . expr '%' expr
+   37     | . expr '+' expr
+   38     | . expr '-' expr
+   39     | . expr '|' expr
+   40     | . expr '&' expr
+   41     | . expr '^' expr
+   42     | . text
+   43     | . number
+   44     | . '-' number
+   45     | . text INCR
+   46     | . text DECR
+   47     | . INCR text
+   48     | . DECR text
+   49 text: . ID
+   50 number: . DIGIT
+   51       | . FLOAT
+
+    DIGIT  shift, and go to state 31
+    FLOAT  shift, and go to state 32
+    ID     shift, and go to state 1
+    INCR   shift, and go to state 34
+    DECR   shift, and go to state 35
+    '-'    shift, and go to state 38
+    '('    shift, and go to state 49
+
+    expr    go to state 91
+    text    go to state 42
+    number  go to state 43
+
+
+State 67
+
+   32 expr: . '(' expr ')'
+   33     | . expr '@' expr
+   34     | . expr '*' expr
+   35     | . expr '/' expr
+   35     | expr '/' . expr
+   36     | . expr '%' expr
+   37     | . expr '+' expr
+   38     | . expr '-' expr
+   39     | . expr '|' expr
+   40     | . expr '&' expr
+   41     | . expr '^' expr
+   42     | . text
+   43     | . number
+   44     | . '-' number
+   45     | . text INCR
+   46     | . text DECR
+   47     | . INCR text
+   48     | . DECR text
+   49 text: . ID
+   50 number: . DIGIT
+   51       | . FLOAT
+
+    DIGIT  shift, and go to state 31
+    FLOAT  shift, and go to state 32
+    ID     shift, and go to state 1
+    INCR   shift, and go to state 34
+    DECR   shift, and go to state 35
+    '-'    shift, and go to state 38
+    '('    shift, and go to state 49
+
+    expr    go to state 92
+    text    go to state 42
+    number  go to state 43
+
+
+State 68
+
+   32 expr: . '(' expr ')'
+   33     | . expr '@' expr
+   34     | . expr '*' expr
+   35     | . expr '/' expr
+   36     | . expr '%' expr
+   37     | . expr '+' expr
+   38     | . expr '-' expr
+   39     | . expr '|' expr
+   40     | . expr '&' expr
+   41     | . expr '^' expr
+   41     | expr '^' . expr
+   42     | . text
+   43     | . number
+   44     | . '-' number
+   45     | . text INCR
+   46     | . text DECR
+   47     | . INCR text
+   48     | . DECR text
+   49 text: . ID
+   50 number: . DIGIT
+   51       | . FLOAT
+
+    DIGIT  shift, and go to state 31
+    FLOAT  shift, and go to state 32
+    ID     shift, and go to state 1
+    INCR   shift, and go to state 34
+    DECR   shift, and go to state 35
+    '-'    shift, and go to state 38
+    '('    shift, and go to state 49
+
+    expr    go to state 93
+    text    go to state 42
+    number  go to state 43
+
+
+State 69
+
+   32 expr: . '(' expr ')'
+   33     | . expr '@' expr
+   34     | . expr '*' expr
+   35     | . expr '/' expr
+   36     | . expr '%' expr
+   36     | expr '%' . expr
+   37     | . expr '+' expr
+   38     | . expr '-' expr
+   39     | . expr '|' expr
+   40     | . expr '&' expr
+   41     | . expr '^' expr
+   42     | . text
+   43     | . number
+   44     | . '-' number
+   45     | . text INCR
+   46     | . text DECR
+   47     | . INCR text
+   48     | . DECR text
+   49 text: . ID
+   50 number: . DIGIT
+   51       | . FLOAT
+
+    DIGIT  shift, and go to state 31
+    FLOAT  shift, and go to state 32
+    ID     shift, and go to state 1
+    INCR   shift, and go to state 34
+    DECR   shift, and go to state 35
+    '-'    shift, and go to state 38
+    '('    shift, and go to state 49
+
+    expr    go to state 94
+    text    go to state 42
+    number  go to state 43
+
+
+State 70
+
+   32 expr: . '(' expr ')'
+   33     | . expr '@' expr
+   33     | expr '@' . expr
+   34     | . expr '*' expr
+   35     | . expr '/' expr
+   36     | . expr '%' expr
+   37     | . expr '+' expr
+   38     | . expr '-' expr
+   39     | . expr '|' expr
+   40     | . expr '&' expr
+   41     | . expr '^' expr
+   42     | . text
+   43     | . number
+   44     | . '-' number
+   45     | . text INCR
+   46     | . text DECR
+   47     | . INCR text
+   48     | . DECR text
+   49 text: . ID
+   50 number: . DIGIT
+   51       | . FLOAT
+
+    DIGIT  shift, and go to state 31
+    FLOAT  shift, and go to state 32
+    ID     shift, and go to state 1
+    INCR   shift, and go to state 34
+    DECR   shift, and go to state 35
+    '-'    shift, and go to state 38
+    '('    shift, and go to state 49
+
+    expr    go to state 95
+    text    go to state 42
+    number  go to state 43
+
+
+State 71
+
+   32 expr: . '(' expr ')'
+   33     | . expr '@' expr
+   34     | . expr '*' expr
+   35     | . expr '/' expr
+   36     | . expr '%' expr
+   37     | . expr '+' expr
+   38     | . expr '-' expr
+   39     | . expr '|' expr
+   40     | . expr '&' expr
+   40     | expr '&' . expr
+   41     | . expr '^' expr
+   42     | . text
+   43     | . number
+   44     | . '-' number
+   45     | . text INCR
+   46     | . text DECR
+   47     | . INCR text
+   48     | . DECR text
+   49 text: . ID
+   50 number: . DIGIT
+   51       | . FLOAT
+
+    DIGIT  shift, and go to state 31
+    FLOAT  shift, and go to state 32
+    ID     shift, and go to state 1
+    INCR   shift, and go to state 34
+    DECR   shift, and go to state 35
+    '-'    shift, and go to state 38
+    '('    shift, and go to state 49
+
+    expr    go to state 96
+    text    go to state 42
+    number  go to state 43
+
+
+State 72
+
+   32 expr: . '(' expr ')'
+   33     | . expr '@' expr
+   34     | . expr '*' expr
+   35     | . expr '/' expr
+   36     | . expr '%' expr
+   37     | . expr '+' expr
+   38     | . expr '-' expr
+   39     | . expr '|' expr
+   39     | expr '|' . expr
+   40     | . expr '&' expr
+   41     | . expr '^' expr
+   42     | . text
+   43     | . number
+   44     | . '-' number
+   45     | . text INCR
+   46     | . text DECR
+   47     | . INCR text
+   48     | . DECR text
+   49 text: . ID
+   50 number: . DIGIT
+   51       | . FLOAT
+
+    DIGIT  shift, and go to state 31
+    FLOAT  shift, and go to state 32
+    ID     shift, and go to state 1
+    INCR   shift, and go to state 34
+    DECR   shift, and go to state 35
+    '-'    shift, and go to state 38
+    '('    shift, and go to state 49
+
+    expr    go to state 97
+    text    go to state 42
+    number  go to state 43
+
+
+State 73
+
+   45 expr: text INCR .
+
+    $default  reduce using rule 45 (expr)
+
+
+State 74
+
+   46 expr: text DECR .
+
+    $default  reduce using rule 46 (expr)
+
+
+State 75
+
+    5 construct: WHILE '(' bool ')' . block
+   12 block: . '{' list '}'
+   13      | . '{' program '}'
+   14      | . list
+   15 list: . stat
+   16     | . list stat
+   17     | . list error '\n'
+   18 stat: . ';'
+   19     | . dec ';'
+   20     | . text '=' expr ';'
+   21     | . text PE expr ';'
+   22     | . text ME expr ';'
+   23     | . dec '=' expr ';'
+   24 dec: . TYPES text
+   49 text: . ID
+
+    ID     shift, and go to state 1
+    TYPES  shift, and go to state 4
+    ';'    shift, and go to state 6
+    '{'    shift, and go to state 7
+
+    block  go to state 98
+    list   go to state 12
+    stat   go to state 13
+    dec    go to state 14
+    text   go to state 15
+
+
+State 76
+
+    8 construct: SWITCH '(' ID ')' . '{' caseblock '}'
+
+    '{'  shift, and go to state 99
+
+
+State 77
+
+   32 expr: '(' expr . ')'
+   33     | expr . '@' expr
+   34     | expr . '*' expr
+   35     | expr . '/' expr
+   36     | expr . '%' expr
+   37     | expr . '+' expr
+   38     | expr . '-' expr
+   39     | expr . '|' expr
+   40     | expr . '&' expr
+   41     | expr . '^' expr
+
+    '+'  shift, and go to state 64
+    '-'  shift, and go to state 65
+    '*'  shift, and go to state 66
+    '/'  shift, and go to state 67
+    '^'  shift, and go to state 68
+    '%'  shift, and go to state 69
+    '@'  shift, and go to state 70
+    '&'  shift, and go to state 71
+    '|'  shift, and go to state 72
+    ')'  shift, and go to state 84
+
+
+State 78
+
+   23 stat: dec '=' expr ';' .
+
+    $default  reduce using rule 23 (stat)
+
+
+State 79
+
+   21 stat: text PE expr ';' .
+
+    $default  reduce using rule 21 (stat)
+
+
+State 80
+
+   22 stat: text ME expr ';' .
+
+    $default  reduce using rule 22 (stat)
+
+
+State 81
+
+   20 stat: text '=' expr ';' .
+
+    $default  reduce using rule 20 (stat)
+
+
+State 82
+
+   26 bool: bool . OR bool
+   27     | bool . AND bool
+   28     | NOT '(' bool . ')'
+
+    OR   shift, and go to state 60
+    AND  shift, and go to state 61
+    ')'  shift, and go to state 100
+
+
+State 83
+
+   29 bool: '(' bool ')' .
+
+    $default  reduce using rule 29 (bool)
+
+
+State 84
+
+   32 expr: '(' expr ')' .
+
+    $default  reduce using rule 32 (expr)
+
+
+State 85
+
+   26 bool: bool . OR bool
+   26     | bool OR bool .  [OR, ')']
+   27     | bool . AND bool
+
+    AND  shift, and go to state 61
+
+    $default  reduce using rule 26 (bool)
+
+    Conflict between rule 26 and token OR resolved as reduce (%left OR).
+    Conflict between rule 26 and token AND resolved as shift (OR < AND).
+
+
+State 86
+
+   26 bool: bool . OR bool
+   27     | bool . AND bool
+   27     | bool AND bool .  [OR, AND, ')']
+
+    $default  reduce using rule 27 (bool)
+
+    Conflict between rule 27 and token OR resolved as reduce (OR < AND).
+    Conflict between rule 27 and token AND resolved as reduce (%left AND).
+
+
+State 87
+
+    6 construct: IF '(' bool ')' block .  [$end, ID, IF, WHILE, TYPES, SWITCH, ';', '{', '}']
+    7          | IF '(' bool ')' block . ELSE block
+
+    ELSE  shift, and go to state 101
+
+    $default  reduce using rule 6 (construct)
+
+
+State 88
+
+   25 bool: expr REL_OPT expr .  [OR, AND, ')']
+   33 expr: expr . '@' expr
+   34     | expr . '*' expr
+   35     | expr . '/' expr
+   36     | expr . '%' expr
+   37     | expr . '+' expr
+   38     | expr . '-' expr
+   39     | expr . '|' expr
+   40     | expr . '&' expr
+   41     | expr . '^' expr
+
+    '+'  shift, and go to state 64
+    '-'  shift, and go to state 65
+    '*'  shift, and go to state 66
+    '/'  shift, and go to state 67
+    '^'  shift, and go to state 68
+    '%'  shift, and go to state 69
+    '@'  shift, and go to state 70
+    '&'  shift, and go to state 71
+    '|'  shift, and go to state 72
+
+    $default  reduce using rule 25 (bool)
+
+
+State 89
+
+   33 expr: expr . '@' expr
+   34     | expr . '*' expr
+   35     | expr . '/' expr
+   36     | expr . '%' expr
+   37     | expr . '+' expr
+   37     | expr '+' expr .  [REL_OPT, OR, AND, '+', '-', '^', ';', ':', '&', '|', ')']
+   38     | expr . '-' expr
+   39     | expr . '|' expr
+   40     | expr . '&' expr
+   41     | expr . '^' expr
+
+    '*'  shift, and go to state 66
+    '/'  shift, and go to state 67
+    '%'  shift, and go to state 69
+    '@'  shift, and go to state 70
+
+    $default  reduce using rule 37 (expr)
+
+    Conflict between rule 37 and token '+' resolved as reduce (%left '+').
+    Conflict between rule 37 and token '-' resolved as reduce (%left '-').
+    Conflict between rule 37 and token '*' resolved as shift ('+' < '*').
+    Conflict between rule 37 and token '/' resolved as shift ('+' < '/').
+    Conflict between rule 37 and token '^' resolved as reduce ('^' < '+').
+    Conflict between rule 37 and token '%' resolved as shift ('+' < '%').
+    Conflict between rule 37 and token '@' resolved as shift ('+' < '@').
+    Conflict between rule 37 and token '&' resolved as reduce ('&' < '+').
+    Conflict between rule 37 and token '|' resolved as reduce ('|' < '+').
+
+
+State 90
+
+   33 expr: expr . '@' expr
+   34     | expr . '*' expr
+   35     | expr . '/' expr
+   36     | expr . '%' expr
+   37     | expr . '+' expr
+   38     | expr . '-' expr
+   38     | expr '-' expr .  [REL_OPT, OR, AND, '+', '-', '^', ';', ':', '&', '|', ')']
+   39     | expr . '|' expr
+   40     | expr . '&' expr
+   41     | expr . '^' expr
+
+    '*'  shift, and go to state 66
+    '/'  shift, and go to state 67
+    '%'  shift, and go to state 69
+    '@'  shift, and go to state 70
+
+    $default  reduce using rule 38 (expr)
+
+    Conflict between rule 38 and token '+' resolved as reduce (%left '+').
+    Conflict between rule 38 and token '-' resolved as reduce (%left '-').
+    Conflict between rule 38 and token '*' resolved as shift ('-' < '*').
+    Conflict between rule 38 and token '/' resolved as shift ('-' < '/').
+    Conflict between rule 38 and token '^' resolved as reduce ('^' < '-').
+    Conflict between rule 38 and token '%' resolved as shift ('-' < '%').
+    Conflict between rule 38 and token '@' resolved as shift ('-' < '@').
+    Conflict between rule 38 and token '&' resolved as reduce ('&' < '-').
+    Conflict between rule 38 and token '|' resolved as reduce ('|' < '-').
+
+
+State 91
+
+   33 expr: expr . '@' expr
+   34     | expr . '*' expr
+   34     | expr '*' expr .  [REL_OPT, OR, AND, '+', '-', '*', '/', '^', '%', ';', ':', '&', '|', ')']
+   35     | expr . '/' expr
+   36     | expr . '%' expr
+   37     | expr . '+' expr
+   38     | expr . '-' expr
+   39     | expr . '|' expr
+   40     | expr . '&' expr
+   41     | expr . '^' expr
+
+    '@'  shift, and go to state 70
+
+    $default  reduce using rule 34 (expr)
+
+    Conflict between rule 34 and token '+' resolved as reduce ('+' < '*').
+    Conflict between rule 34 and token '-' resolved as reduce ('-' < '*').
+    Conflict between rule 34 and token '*' resolved as reduce (%left '*').
+    Conflict between rule 34 and token '/' resolved as reduce (%left '/').
+    Conflict between rule 34 and token '^' resolved as reduce ('^' < '*').
+    Conflict between rule 34 and token '%' resolved as reduce (%left '%').
+    Conflict between rule 34 and token '@' resolved as shift ('*' < '@').
+    Conflict between rule 34 and token '&' resolved as reduce ('&' < '*').
+    Conflict between rule 34 and token '|' resolved as reduce ('|' < '*').
+
+
+State 92
+
+   33 expr: expr . '@' expr
+   34     | expr . '*' expr
+   35     | expr . '/' expr
+   35     | expr '/' expr .  [REL_OPT, OR, AND, '+', '-', '*', '/', '^', '%', ';', ':', '&', '|', ')']
+   36     | expr . '%' expr
+   37     | expr . '+' expr
+   38     | expr . '-' expr
+   39     | expr . '|' expr
+   40     | expr . '&' expr
+   41     | expr . '^' expr
+
+    '@'  shift, and go to state 70
+
+    $default  reduce using rule 35 (expr)
+
+    Conflict between rule 35 and token '+' resolved as reduce ('+' < '/').
+    Conflict between rule 35 and token '-' resolved as reduce ('-' < '/').
+    Conflict between rule 35 and token '*' resolved as reduce (%left '*').
+    Conflict between rule 35 and token '/' resolved as reduce (%left '/').
+    Conflict between rule 35 and token '^' resolved as reduce ('^' < '/').
+    Conflict between rule 35 and token '%' resolved as reduce (%left '%').
+    Conflict between rule 35 and token '@' resolved as shift ('/' < '@').
+    Conflict between rule 35 and token '&' resolved as reduce ('&' < '/').
+    Conflict between rule 35 and token '|' resolved as reduce ('|' < '/').
+
+
+State 93
+
+   33 expr: expr . '@' expr
+   34     | expr . '*' expr
+   35     | expr . '/' expr
+   36     | expr . '%' expr
+   37     | expr . '+' expr
+   38     | expr . '-' expr
+   39     | expr . '|' expr
+   40     | expr . '&' expr
+   41     | expr . '^' expr
+   41     | expr '^' expr .  [REL_OPT, OR, AND, '^', ';', ':', '&', '|', ')']
+
+    '+'  shift, and go to state 64
+    '-'  shift, and go to state 65
+    '*'  shift, and go to state 66
+    '/'  shift, and go to state 67
+    '%'  shift, and go to state 69
+    '@'  shift, and go to state 70
+
+    $default  reduce using rule 41 (expr)
+
+    Conflict between rule 41 and token '+' resolved as shift ('^' < '+').
+    Conflict between rule 41 and token '-' resolved as shift ('^' < '-').
+    Conflict between rule 41 and token '*' resolved as shift ('^' < '*').
+    Conflict between rule 41 and token '/' resolved as shift ('^' < '/').
+    Conflict between rule 41 and token '^' resolved as reduce (%left '^').
+    Conflict between rule 41 and token '%' resolved as shift ('^' < '%').
+    Conflict between rule 41 and token '@' resolved as shift ('^' < '@').
+    Conflict between rule 41 and token '&' resolved as reduce (%left '&').
+    Conflict between rule 41 and token '|' resolved as reduce (%left '|').
+
+
+State 94
+
+   33 expr: expr . '@' expr
+   34     | expr . '*' expr
+   35     | expr . '/' expr
+   36     | expr . '%' expr
+   36     | expr '%' expr .  [REL_OPT, OR, AND, '+', '-', '*', '/', '^', '%', ';', ':', '&', '|', ')']
+   37     | expr . '+' expr
+   38     | expr . '-' expr
+   39     | expr . '|' expr
+   40     | expr . '&' expr
+   41     | expr . '^' expr
+
+    '@'  shift, and go to state 70
+
+    $default  reduce using rule 36 (expr)
+
+    Conflict between rule 36 and token '+' resolved as reduce ('+' < '%').
+    Conflict between rule 36 and token '-' resolved as reduce ('-' < '%').
+    Conflict between rule 36 and token '*' resolved as reduce (%left '*').
+    Conflict between rule 36 and token '/' resolved as reduce (%left '/').
+    Conflict between rule 36 and token '^' resolved as reduce ('^' < '%').
+    Conflict between rule 36 and token '%' resolved as reduce (%left '%').
+    Conflict between rule 36 and token '@' resolved as shift ('%' < '@').
+    Conflict between rule 36 and token '&' resolved as reduce ('&' < '%').
+    Conflict between rule 36 and token '|' resolved as reduce ('|' < '%').
+
+
+State 95
+
+   33 expr: expr . '@' expr
+   33     | expr '@' expr .  [REL_OPT, OR, AND, '+', '-', '*', '/', '^', '%', ';', ':', '&', '|', ')']
+   34     | expr . '*' expr
+   35     | expr . '/' expr
+   36     | expr . '%' expr
+   37     | expr . '+' expr
+   38     | expr . '-' expr
+   39     | expr . '|' expr
+   40     | expr . '&' expr
+   41     | expr . '^' expr
+
+    '@'  shift, and go to state 70
+
+    $default  reduce using rule 33 (expr)
+
+    Conflict between rule 33 and token '+' resolved as reduce ('+' < '@').
+    Conflict between rule 33 and token '-' resolved as reduce ('-' < '@').
+    Conflict between rule 33 and token '*' resolved as reduce ('*' < '@').
+    Conflict between rule 33 and token '/' resolved as reduce ('/' < '@').
+    Conflict between rule 33 and token '^' resolved as reduce ('^' < '@').
+    Conflict between rule 33 and token '%' resolved as reduce ('%' < '@').
+    Conflict between rule 33 and token '@' resolved as shift (%right '@').
+    Conflict between rule 33 and token '&' resolved as reduce ('&' < '@').
+    Conflict between rule 33 and token '|' resolved as reduce ('|' < '@').
+
+
+State 96
+
+   33 expr: expr . '@' expr
+   34     | expr . '*' expr
+   35     | expr . '/' expr
+   36     | expr . '%' expr
+   37     | expr . '+' expr
+   38     | expr . '-' expr
+   39     | expr . '|' expr
+   40     | expr . '&' expr
+   40     | expr '&' expr .  [REL_OPT, OR, AND, '^', ';', ':', '&', '|', ')']
+   41     | expr . '^' expr
+
+    '+'  shift, and go to state 64
+    '-'  shift, and go to state 65
+    '*'  shift, and go to state 66
+    '/'  shift, and go to state 67
+    '%'  shift, and go to state 69
+    '@'  shift, and go to state 70
+
+    $default  reduce using rule 40 (expr)
+
+    Conflict between rule 40 and token '+' resolved as shift ('&' < '+').
+    Conflict between rule 40 and token '-' resolved as shift ('&' < '-').
+    Conflict between rule 40 and token '*' resolved as shift ('&' < '*').
+    Conflict between rule 40 and token '/' resolved as shift ('&' < '/').
+    Conflict between rule 40 and token '^' resolved as reduce (%left '^').
+    Conflict between rule 40 and token '%' resolved as shift ('&' < '%').
+    Conflict between rule 40 and token '@' resolved as shift ('&' < '@').
+    Conflict between rule 40 and token '&' resolved as reduce (%left '&').
+    Conflict between rule 40 and token '|' resolved as reduce (%left '|').
+
+
+State 97
+
+   33 expr: expr . '@' expr
+   34     | expr . '*' expr
+   35     | expr . '/' expr
+   36     | expr . '%' expr
+   37     | expr . '+' expr
+   38     | expr . '-' expr
+   39     | expr . '|' expr
+   39     | expr '|' expr .  [REL_OPT, OR, AND, '^', ';', ':', '&', '|', ')']
+   40     | expr . '&' expr
+   41     | expr . '^' expr
+
+    '+'  shift, and go to state 64
+    '-'  shift, and go to state 65
+    '*'  shift, and go to state 66
+    '/'  shift, and go to state 67
+    '%'  shift, and go to state 69
+    '@'  shift, and go to state 70
+
+    $default  reduce using rule 39 (expr)
+
+    Conflict between rule 39 and token '+' resolved as shift ('|' < '+').
+    Conflict between rule 39 and token '-' resolved as shift ('|' < '-').
+    Conflict between rule 39 and token '*' resolved as shift ('|' < '*').
+    Conflict between rule 39 and token '/' resolved as shift ('|' < '/').
+    Conflict between rule 39 and token '^' resolved as reduce (%left '^').
+    Conflict between rule 39 and token '%' resolved as shift ('|' < '%').
+    Conflict between rule 39 and token '@' resolved as shift ('|' < '@').
+    Conflict between rule 39 and token '&' resolved as reduce (%left '&').
+    Conflict between rule 39 and token '|' resolved as reduce (%left '|').
+
+
+State 98
+
+    5 construct: WHILE '(' bool ')' block .
+
+    $default  reduce using rule 5 (construct)
+
+
+State 99
+
+    8 construct: SWITCH '(' ID ')' '{' . caseblock '}'
+    9 caseblock: . CASE expr ':' block caseblock
+   10          | . CASE expr ':' block
+   11          | . DEFAULT ':' block
+
+    CASE     shift, and go to state 102
+    DEFAULT  shift, and go to state 103
+
+    caseblock  go to state 104
+
+
+State 100
+
+   28 bool: NOT '(' bool ')' .
+
+    $default  reduce using rule 28 (bool)
+
+
+State 101
+
+    7 construct: IF '(' bool ')' block ELSE . block
+   12 block: . '{' list '}'
+   13      | . '{' program '}'
+   14      | . list
+   15 list: . stat
+   16     | . list stat
+   17     | . list error '\n'
+   18 stat: . ';'
+   19     | . dec ';'
+   20     | . text '=' expr ';'
+   21     | . text PE expr ';'
+   22     | . text ME expr ';'
+   23     | . dec '=' expr ';'
+   24 dec: . TYPES text
+   49 text: . ID
+
+    ID     shift, and go to state 1
+    TYPES  shift, and go to state 4
+    ';'    shift, and go to state 6
+    '{'    shift, and go to state 7
+
+    block  go to state 105
+    list   go to state 12
+    stat   go to state 13
+    dec    go to state 14
+    text   go to state 15
+
+
+State 102
+
+    9 caseblock: CASE . expr ':' block caseblock
+   10          | CASE . expr ':' block
+   32 expr: . '(' expr ')'
+   33     | . expr '@' expr
+   34     | . expr '*' expr
+   35     | . expr '/' expr
+   36     | . expr '%' expr
+   37     | . expr '+' expr
+   38     | . expr '-' expr
+   39     | . expr '|' expr
+   40     | . expr '&' expr
+   41     | . expr '^' expr
+   42     | . text
+   43     | . number
+   44     | . '-' number
+   45     | . text INCR
+   46     | . text DECR
+   47     | . INCR text
+   48     | . DECR text
+   49 text: . ID
+   50 number: . DIGIT
+   51       | . FLOAT
+
+    DIGIT  shift, and go to state 31
+    FLOAT  shift, and go to state 32
+    ID     shift, and go to state 1
+    INCR   shift, and go to state 34
+    DECR   shift, and go to state 35
+    '-'    shift, and go to state 38
+    '('    shift, and go to state 49
+
+    expr    go to state 106
+    text    go to state 42
+    number  go to state 43
+
+
+State 103
+
+   11 caseblock: DEFAULT . ':' block
+
+    ':'  shift, and go to state 107
+
+
+State 104
+
+    8 construct: SWITCH '(' ID ')' '{' caseblock . '}'
+
+    '}'  shift, and go to state 108
+
+
+State 105
+
+    7 construct: IF '(' bool ')' block ELSE block .
+
+    $default  reduce using rule 7 (construct)
+
+
+State 106
+
+    9 caseblock: CASE expr . ':' block caseblock
+   10          | CASE expr . ':' block
+   33 expr: expr . '@' expr
+   34     | expr . '*' expr
+   35     | expr . '/' expr
+   36     | expr . '%' expr
+   37     | expr . '+' expr
+   38     | expr . '-' expr
+   39     | expr . '|' expr
+   40     | expr . '&' expr
+   41     | expr . '^' expr
+
+    '+'  shift, and go to state 64
+    '-'  shift, and go to state 65
+    '*'  shift, and go to state 66
+    '/'  shift, and go to state 67
+    '^'  shift, and go to state 68
+    '%'  shift, and go to state 69
+    '@'  shift, and go to state 70
+    ':'  shift, and go to state 109
+    '&'  shift, and go to state 71
+    '|'  shift, and go to state 72
+
+
+State 107
+
+   11 caseblock: DEFAULT ':' . block
+   12 block: . '{' list '}'
+   13      | . '{' program '}'
+   14      | . list
+   15 list: . stat
+   16     | . list stat
+   17     | . list error '\n'
+   18 stat: . ';'
+   19     | . dec ';'
+   20     | . text '=' expr ';'
+   21     | . text PE expr ';'
+   22     | . text ME expr ';'
+   23     | . dec '=' expr ';'
+   24 dec: . TYPES text
+   49 text: . ID
+
+    ID     shift, and go to state 1
+    TYPES  shift, and go to state 4
+    ';'    shift, and go to state 6
+    '{'    shift, and go to state 7
+
+    block  go to state 110
+    list   go to state 12
+    stat   go to state 13
+    dec    go to state 14
+    text   go to state 15
+
+
+State 108
+
+    8 construct: SWITCH '(' ID ')' '{' caseblock '}' .
+
+    $default  reduce using rule 8 (construct)
+
+
+State 109
+
+    9 caseblock: CASE expr ':' . block caseblock
+   10          | CASE expr ':' . block
+   12 block: . '{' list '}'
+   13      | . '{' program '}'
+   14      | . list
+   15 list: . stat
+   16     | . list stat
+   17     | . list error '\n'
+   18 stat: . ';'
+   19     | . dec ';'
+   20     | . text '=' expr ';'
+   21     | . text PE expr ';'
+   22     | . text ME expr ';'
+   23     | . dec '=' expr ';'
+   24 dec: . TYPES text
+   49 text: . ID
+
+    ID     shift, and go to state 1
+    TYPES  shift, and go to state 4
+    ';'    shift, and go to state 6
+    '{'    shift, and go to state 7
+
+    block  go to state 111
+    list   go to state 12
+    stat   go to state 13
+    dec    go to state 14
+    text   go to state 15
+
+
+State 110
+
+   11 caseblock: DEFAULT ':' block .
+
+    $default  reduce using rule 11 (caseblock)
+
+
+State 111
+
+    9 caseblock: . CASE expr ':' block caseblock
+    9          | CASE expr ':' block . caseblock
+   10          | . CASE expr ':' block
+   10          | CASE expr ':' block .  ['}']
+   11          | . DEFAULT ':' block
+
+    CASE     shift, and go to state 102
+    DEFAULT  shift, and go to state 103
+
+    $default  reduce using rule 10 (caseblock)
+
+    caseblock  go to state 112
+
+
+State 112
+
+    9 caseblock: CASE expr ':' block caseblock .
+
+    $default  reduce using rule 9 (caseblock)
